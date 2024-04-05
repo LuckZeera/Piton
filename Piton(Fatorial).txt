@@ -1,0 +1,7 @@
+I Fatorial (I N)
+    I fat : 1
+    I X : N
+        PA$RA I : 1 ATE N
+            fat : fat + fat * N
+            x : x - 1
+    RETORNA fat

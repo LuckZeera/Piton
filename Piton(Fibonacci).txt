@@ -1,0 +1,4 @@
+I Fibonacci (I N)
+    ? N == 0 OU N == 1
+        RET$ORNA 1
+    RETORNA Fibonacci(N-1) + Fibonacci(N-2)
