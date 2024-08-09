@@ -3,7 +3,7 @@ grammar Piton;
 inicio: algoritmo EOF;
 declaracoes: tipo ID | tipo ID ATR (ID|NUM|'('operacao')');
 argumento: ID | NUM | operacao; 
-algoritmo: (instr)*;
+algoritmo: (instr)+;
 instr: atrib | acao | se | enquanto | para | funcao_vazio | funcao_nao_vazio | declaracoes | retorna;
 atrib: operacao ATR ID;
 acao: SAI(ID|NUM|operacao)|ENT ID;
