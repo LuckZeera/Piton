@@ -1,5 +1,5 @@
 I Fatorial (I N)
-    I fat = 1
+    I fat : 1
     I X : N
         PARA N : X ATE 1
             fat * X : fat
