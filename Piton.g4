@@ -1,0 +1,50 @@
+grammar Piton;
+
+inicio: algoritmo EOF #NInicio;
+declaracoes: tipo ID #NDeclaracao1 | tipo ID ATR (ID|NUM) #NDeclaracao2 ;
+argumento: ID #NArgumento1 | NUM #NArgumento2 | operacao #NArgumento3;
+algoritmo: (instr)+ #BlocoAlgoritmo;
+instr: atrib #BlocoInstrucao1 | acao #BlocoInstrucao2 | se #BlocoInstrucao3 | enquanto #BlocoInstrucao4 | para #BlocoInstrucao5 | funcao_vazio #BlocoInstrucao6 | funcao_nao_vazio #BlocoInstrucao7 | declaracoes #BlocoInstrucao8 | retorna #BlocoInstrucao9;
+atrib: operacao ATR ID #NAtribuicao;
+acao: SAI(ID|NUM|operacao) #BlocoAcao1 |ENT ID #BlocoAcao2;
+operacao: operando (operacao_cauda)? #NOperacao;
+operando: NUM #NOperando1 |ID #NOperando2 |chamada_funcao #NOperando3;
+operacao_cauda: OP_ART operando (operacao_cauda)* #NOperacaoCauda;
+se: IF condicao (instr)* (senao|senao_se)? #NSe;
+condicao: operando OP_REL operando (logica)* #NCondicao;
+logica: OP_LOG (condicao) #NLogica;
+senao: ELSE (instr)* #NSenao;
+senao_se: ELIF condicao (instr)* (senao_se)? #NSenao_se;
+enquanto: ENQ condicao (instr)* #NEnquanto;
+para: PARA atrib ATE (ID | NUM) (instr)* #NPara;
+funcao_vazio: VAZ ID AP (declaracoes)* FP (instr)* END #NFuncao_vazio;
+funcao_nao_vazio: tipo ID AP (declaracoes)* FP (instr)* END #NFuncao_nao_vazio;
+retorna: RET (ID|NUM|operacao) #NRetorna;
+chamada_funcao: ID AP (argumento)* FP #NChamada_funcao;
+
+
+tipo: 'I' | 'C' | 'B' | 'S' | 'F';
+ATR: ':';
+OP_ART: '+' | '-' | '*' | '#' | '/';
+PARA: 'PARA';
+ATE: 'ATE';
+ENQ: 'ENQUANTO';
+OP_REL: '<' | '<=' | '>' | '>=' | '==' | '!=';
+OP_LOG: 'OU' | 'E' | 'NAO';
+VAZ: 'VAZIO';
+ENT: 'ENTRADA';
+SAI: 'SAIDA';
+IF: '?';
+ELSE: '%';
+ELIF: '%?';
+RET: 'RETORNA';
+END: 'END';
+ID: LETRA(DIGITO | LETRA)*;
+NUM: DIGITO + ('.'DIGITO+)?;
+fragment LETRA: [a-zA-Z];
+fragment DIGITO: [0-9];
+AP: '(';
+FP: ')';
+EB: [ \r\t\n]* ->skip;
+ErrorChar: . ;
+
